@@ -23,7 +23,7 @@ export const CourseCard = (props) => {
                     </div>
                     <div className='RightSegments'>
                         <h4 className='alternateTitle'>Created: </h4>
-                        <p>{formatDate(props.creationDate.toString())}</p>
+                        <p>{formatDate(props.creationDate)}</p>
                     </div>
                 </div>
                 <div className='ButtonContainer'>

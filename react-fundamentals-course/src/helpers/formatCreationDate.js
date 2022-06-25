@@ -1,3 +1,3 @@
-export const formatDate = (stringValue) => {
-    return stringValue.replace(/\//g, '.');
+export const formatDate = (value) => {
+    return value.toString().replace(/\//g, '.');
 }
