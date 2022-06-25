@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Search } from "../../common/Input/Input";
 import { Button } from "../../common/Button/Button";
 import { CreateCourse } from "../CreateCourse/CreateCourse";
+import { displayDurationInHoursAndMinutes } from '../../helpers/getCourseDuration';
 import './Courses.css';
 
 
@@ -32,28 +33,8 @@ export const Courses = (props) => {
         })
         return authorName; 
     }
-    
-    const durationConversionToHoursMinutes = (durationInMinutes) => {
-        let convertedDuration = '';
-        let outputHours = '';
-        let outputMinutes = '';
-        const hours = Math.floor(durationInMinutes/60);
-        const minutes = durationInMinutes % 60;
-        if(hours < 10){
-            outputHours = `0${hours}` ;
-        } else {
-            outputHours = `${hours}`;
-        }
-        if(minutes < 10){
-            outputMinutes = `0${minutes}`
-        } else {
-            outputMinutes = `${minutes}`
-        }
-        convertedDuration = `${outputHours}:${outputMinutes}`;
-        return convertedDuration;
-    }
+
     const [searchTerm, setSearchTerm] = useState('');
-    // const [searchList, setSearchList] = useState(props.courseList);
     const [courseList, setCourseList] = useState(props.courseList)
 
     const searchHandler = (event) => {
@@ -64,8 +45,7 @@ export const Courses = (props) => {
             } else if(value.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) || value.id.includes(searchTerm)){
                 return value;
             } else {
-                // eslint-disable-next-line array-callback-return
-            return;
+                return;
             }
         }))
     }
@@ -77,8 +57,6 @@ export const Courses = (props) => {
             ...enteredNewCourseData,
             id: Math.random().toString()
         }
-        // console.log(courseData);
-        
         if(showAddCourseScreen === false){
             setShowAddCourseScreen(true)
         } else {
@@ -92,7 +70,6 @@ export const Courses = (props) => {
             id: Math.random(100).toString(),
             ...enteredNewAuthorData,
         }
-        console.log(authorData);
         props.addAuthor(authorData)              
     }
 
@@ -103,7 +80,7 @@ export const Courses = (props) => {
                     title={data.title} 
                     description={data.description} 
                     creationDate={data.creationDate} 
-                    duration={durationConversionToHoursMinutes(data.duration)} 
+                    duration={displayDurationInHoursAndMinutes(data.duration)} 
                     authors={getAuthorName(data.authors)} 
                 />
             ))
@@ -112,7 +89,6 @@ export const Courses = (props) => {
 
     useEffect(() => {
         setCourseList(props.courseList)
-        console.log(courseList)
     },[props.courseList])
     
     if(showAddCourseScreen){

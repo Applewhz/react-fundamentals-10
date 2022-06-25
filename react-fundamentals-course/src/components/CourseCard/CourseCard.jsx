@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "../../common/Button/Button";
+import { formatDate } from "../../helpers/formatCreationDate";
 import './CourseCard.css'; 
 
 export const CourseCard = (props) => {
@@ -22,7 +23,7 @@ export const CourseCard = (props) => {
                     </div>
                     <div className='RightSegments'>
                         <h4 className='alternateTitle'>Created: </h4>
-                        <p>{props.creationDate.toString().replace(/\//g, '.')}</p>
+                        <p>{formatDate(props.creationDate.toString())}</p>
                     </div>
                 </div>
                 <div className='ButtonContainer'>

@@ -23,7 +23,6 @@ function App() {
         [...prevCourseList, newCourse]
       )
     })
-    console.log(courseList)
   }
 
   const addAuthorHandler = (newAuthor) => {

@@ -3,6 +3,7 @@ import { Button } from "../../common/Button/Button";
 import './CreateCourse.css';
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import { displayDurationInHoursAndMinutes } from '../../helpers/getCourseDuration'
 
 export const CreateCourse = (props) =>{
 
@@ -25,32 +26,13 @@ export const CreateCourse = (props) =>{
         setTimeDuration(event.target.value)
     }
 
-    const displayDurationInHoursAndMinutes = (durationInMinutes) => {
-        let convertedDuration = '';
-        let outputHours = '';
-        let outputMinutes = '';
-        const hours = Math.floor(durationInMinutes/60);
-        const minutes = durationInMinutes % 60;
-        if(hours < 10){
-            outputHours = `0${hours}` ;
-        } else {
-            outputHours = `${hours}`;
-        }
-        if(minutes < 10){
-            outputMinutes = `0${minutes}`
-        } else {
-            outputMinutes = `${minutes}`
-        }
-        convertedDuration = `${outputHours}:${outputMinutes}`;
-        return convertedDuration;
-    }
     const newAuthorHandler = (event) => {
             setNewAuthorName(event.target.value)
     }
 
     const addNewAuthorHandler = (event) => {
         event.preventDefault();
-        if(newAuthorName === '' || newAuthorName.length < 2){
+        if(newAuthorName === '' || newAuthorName.trim().length < 2){
             return;
         } else {
             const newAuthor = {
@@ -72,7 +54,6 @@ export const CreateCourse = (props) =>{
 
     const addCourseAuthorHandler = (event) => {
         event.preventDefault();
-        console.log(event.target.value)
         setSelectedAuthorList(prevSelectedAuthorList => {
             return (
                 [...prevSelectedAuthorList, event.target.value]
@@ -83,7 +64,6 @@ export const CreateCourse = (props) =>{
 
     const removeCourseAuthorHandler = (event) => {
         event.preventDefault();
-        console.log(event.target.value)
         setCourseAuthorList(prevCourseAuthorList => {
             return (
                 [...prevCourseAuthorList, event.target.value]
@@ -150,7 +130,6 @@ export const CreateCourse = (props) =>{
                 duration: timeDuration,
                 authors: selectedAuthorList,
             }
-            console.log('NEW COURSE >>>> ', newCourse)
             props.addNewCourseHandler(newCourse);
             
         }
@@ -159,7 +138,6 @@ export const CreateCourse = (props) =>{
     
     useEffect(() => {
         setCourseAuthorList(props.authorsList.map(data => data.id))
-        console.log(courseAuthorList)
     },[props.authorsList])
 
     return (
