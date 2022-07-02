@@ -6,9 +6,47 @@ import { Button } from "../../common/Button/Button";
 import { CreateCourse } from "../CreateCourse/CreateCourse";
 import { displayDurationInHoursAndMinutes } from '../../helpers/getCourseDuration';
 import './Courses.css';
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+// import {mockedCoursesList, mockedAuthorsList} from '../../constants/MockedData'
 
 
 export const Courses = (props) => {
+
+    const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState('');
+    const [courseList, setCourseList] = useState(props.courseList);
+    const [displayCourseList, setDisplayCourseList] = useState(props.courseList);
+    const [authorList, setAuthorList] = useState(props.authorList)
+
+    // const getAllCourseData = async() => {
+    //     axios.get('http://localhost:4000/courses/all').then(res => {
+    //         setCourseList(res.data.result);
+    //         setDisplayCourseList(res.data.result);
+    //         console.log(res.data.result)
+    //     }).catch(error => {
+    //         console.log(error);
+    //     });
+    // }
+
+    // const getAllAuthorsData = async() => {
+    //     axios.get('http://localhost:4000/authors/all').then(res => {
+    //         setAuthorList(res.data.result);
+    //         console.log(res.data.result)
+    //     }).catch(error => {
+    //         console.log(error);
+    //     });
+    // }
+
+    // useEffect(() => {
+    //     getAllCourseData();
+    //     getAllAuthorsData();
+    // },[])
+    
+    // useEffect(() => {
+    //     getAllCourseData()
+    // },[])
+
 
     const getAuthorName = (authorCodeArray) => {
         const authorsArray = [];
@@ -26,7 +64,7 @@ export const Courses = (props) => {
     
     const checkAuthorId = (authorCode) => {  
         let authorName = 'Author ID not found!';
-        props.authorsList.forEach(author => {
+        authorList.forEach(author => {
           if(author.id === authorCode){
             return authorName = author.name;
           } 
@@ -34,15 +72,31 @@ export const Courses = (props) => {
         return authorName; 
     }
 
-    const [searchTerm, setSearchTerm] = useState('');
-    const [courseList, setCourseList] = useState(props.courseList)
-
     const searchHandler = (event) => {
+        setSearchTerm(event.target.value)
+        console.log(event.target.value)
+    }
+
+    // const searchSubmitHandler = (event) => {
+    //     event.preventDefault();
+    //     setCourseList(courseList.filter((value) => {
+    //         if(searchTerm === ''){
+    //             return value;
+    //         } else if(value.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) || value.id.includes(searchTerm)){
+    //             return value;
+    //         } else {
+    //             return;
+    //         }
+    //     }))
+    // }
+
+    const searchSubmitHandler = (event) => {
+        console.log('coming here?')
         event.preventDefault();
-        setCourseList(props.courseList.filter((value) => {
+        setDisplayCourseList(courseList.filter((value) => {
             if(searchTerm === ''){
                 return value;
-            } else if(value.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) || value.id.includes(searchTerm)){
+            } else if(value.title.toLowerCase().includes(searchTerm.toLowerCase()) || value.id.includes(searchTerm)){
                 return value;
             } else {
                 return;
@@ -50,64 +104,49 @@ export const Courses = (props) => {
         }))
     }
 
-    const [showAddCourseScreen, setShowAddCourseScreen] = useState(false)
+    // const addCourseHandler = (event) => {
+    //     event.preventDefault()
+    //     navigate('/courses');
+    // }
+    const displayCourses = () => {
+        return displayCourseList.map((data) => 
+        <div>
+            <CourseCard 
+                 title={data.title} 
+                 description={data.description} 
+                 creationDate={data.creationDate} 
+                 duration={displayDurationInHoursAndMinutes(data.duration)} 
+                 authors={getAuthorName(data.authors)}
+                 id={data.id}
+             /> 
+        </div>
+             
+         )       
+     }
 
-    const addNewCourseHandler = (enteredNewCourseData) => {
-        const courseData = {
-            ...enteredNewCourseData,
-            id: Math.random().toString()
-        }
-        if(showAddCourseScreen === false){
-            setShowAddCourseScreen(true)
-        } else {
-            setShowAddCourseScreen(false)
-            props.addCourse(courseData)
-        }               
-    }
-
-    const addNewAuthorHandler = (enteredNewAuthorData) => {
-        const authorData = {
-            id: Math.random(100).toString(),
-            ...enteredNewAuthorData,
-        }
-        props.addAuthor(authorData)              
-    }
-
-    const displayCourses = (courseList) => {
-        return (
-            courseList.map((data) => (
-                <CourseCard 
-                    title={data.title} 
-                    description={data.description} 
-                    creationDate={data.creationDate} 
-                    duration={displayDurationInHoursAndMinutes(data.duration)} 
-                    authors={getAuthorName(data.authors)} 
-                />
-            ))
-        )
-    }
-
-    useEffect(() => {
-        setCourseList(props.courseList)
-    },[props.courseList])
+    // useEffect(() => {
+    //     setCourseList(props.courseList)
+    // },[props.courseList])
     
-    if(showAddCourseScreen){
-        return (
-            <div>
-                <CreateCourse authorsList={props.authorsList} addNewCourseHandler={addNewCourseHandler} addNewAuthorHandler={addNewAuthorHandler}/>
-            </div>
-        )
-    } else {
+    // if(showAddCourseScreen){
+    //     return (
+    //         <div>
+    //             <CreateCourse authorList={props.authorList} addNewCourseHandler={addNewCourseHandler} addNewAuthorHandler={addNewAuthorHandler}/>
+    //         </div>
+    //     )
+    // } else {
         return (
             <div className='Body'>
               <div className='BodyHeader'>
-                  <Search placeholder='Enter Course Name....' setState={setSearchTerm} onClickFunction={searchHandler}/>
+                  <Search placeholder='Enter Course Name....' onChange={searchHandler} onClick={searchSubmitHandler}/>
                   <div className='AddCourseButton'>
-                        <Button title='Add New Course' onClickFunction={addNewCourseHandler}/>
+                        <Link to='/courses/add'>
+                            <Button title='Add New Course' />
+                        </Link>
                   </div>
               </div>
-              {displayCourses(courseList)}
+              {displayCourses()}
             </div>
         )
-    }
+    // }
 }

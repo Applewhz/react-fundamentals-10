@@ -1,20 +1,20 @@
 import './App.css';
-import { Header } from './components/Header/Header';
-import { Courses } from './components/Courses/Courses';
+import { Outlet } from 'react-router-dom'
+import AppRoutes from './Routes/Routes';
 import { useState, useEffect } from 'react';
-import { mockedCoursesList, mockedAuthorsList } from './constants/MockedData'
+import {mockedCoursesList, mockedAuthorsList} from './constants/MockedData'
 
 function App() {
   const [courseList, setCourseList] = useState(mockedCoursesList);
-  const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
+  const [authorList, setAuthorList] = useState(mockedAuthorsList);
 
   useEffect(() => {
-    return setCourseList(courseList)
+    setCourseList(courseList)
   },[courseList])
 
   useEffect(() => {
-    setAuthorsList(authorsList)
-  },[authorsList])
+    setAuthorList(authorList)
+  },[authorList])
 
   const addCourseHandler = (newCourse) => {
     
@@ -26,20 +26,17 @@ function App() {
   }
 
   const addAuthorHandler = (newAuthor) => {
-    setAuthorsList(prevAuthorList => {
+    setAuthorList(prevAuthorList => {
       return (
         [...prevAuthorList, newAuthor] 
       )
     })
-    return authorsList;
+    return authorList;
   }
-
   return (
     <div className="App">  
-        <Header userName='userName'/>
-        <div>
-          <Courses courseList={courseList} authorsList={authorsList} addCourse={addCourseHandler} addAuthor={addAuthorHandler}/>
-        </div>
+      <AppRoutes courseList={courseList} authorList={authorList} addCourseHandler={addCourseHandler} addAuthorHandler={addAuthorHandler}/>
+      <Outlet />
     </div>
   );
 }

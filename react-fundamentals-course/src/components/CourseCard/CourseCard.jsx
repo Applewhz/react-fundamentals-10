@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "../../common/Button/Button";
 import { formatDate } from "../../helpers/formatCreationDate";
 import './CourseCard.css'; 
+import { Link } from "react-router-dom";
 
 export const CourseCard = (props) => {
 
@@ -27,7 +28,9 @@ export const CourseCard = (props) => {
                     </div>
                 </div>
                 <div className='ButtonContainer'>
-                    <Button title='Show Course' />
+                    <Link to={`/courses/${props.id}`}>
+                        <Button title='Show Course' />
+                    </Link>
                 </div>
             </div>
         </div>

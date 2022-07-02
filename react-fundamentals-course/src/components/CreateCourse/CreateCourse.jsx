@@ -4,15 +4,25 @@ import './CreateCourse.css';
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { displayDurationInHoursAndMinutes } from '../../helpers/getCourseDuration'
+import axios from 'axios'
+import { Input } from "../../common/Input/Input";
+import { useNavigate } from 'react-router-dom';
 
 export const CreateCourse = (props) =>{
 
+    const navigate = useNavigate();
+    const [authorList, setAuthorList] = useState(props.authorList);
     const [title , setTitle] = useState('')
     const [description , setDescription] = useState('')
     const [timeDuration , setTimeDuration] = useState(0)
-    const [courseAuthorList , setCourseAuthorList] = useState(props.authorsList.map(data => data.id))
+    const [courseAuthorList , setCourseAuthorList] = useState(props.authorList.map(data => data.id))
     const [selectedAuthorList , setSelectedAuthorList] = useState([])
     const [newAuthorName , setNewAuthorName] = useState('')
+
+    useEffect(() => {
+        setCourseAuthorList(props.authorList.map(data => data.id))
+        setAuthorList(props.authorList)
+    },[props.authorList])
 
     const titleChangeHandler = (event) => {
         setTitle(event.target.value)
@@ -35,16 +45,14 @@ export const CreateCourse = (props) =>{
         if(newAuthorName === '' || newAuthorName.trim().length < 2){
             return;
         } else {
-            const newAuthor = {
-                name: newAuthorName,
-            }
-            props.addNewAuthorHandler(newAuthor);
+            props.addAuthorHandler({id : uuidv4(), name: newAuthorName});
+            setNewAuthorName('')
         }
     }
 
     const checkAuthorId = (authorCode) => {  
         let authorName = 'Author ID not found!';
-        props.authorsList.forEach(author => {
+        authorList.forEach(author => {
           if(author.id === authorCode){
             return authorName = author.name;
           } 
@@ -130,15 +138,12 @@ export const CreateCourse = (props) =>{
                 duration: timeDuration,
                 authors: selectedAuthorList,
             }
-            props.addNewCourseHandler(newCourse);
+            props.addCourseHandler(newCourse)
+            navigate('/courses');
             
         }
         
     }
-    
-    useEffect(() => {
-        setCourseAuthorList(props.authorsList.map(data => data.id))
-    },[props.authorsList])
 
     return (
         <div className='Create'>
@@ -161,7 +166,7 @@ export const CreateCourse = (props) =>{
                         <div className='AddAuthor'>
                             <h2>Add Authors</h2>
                             <h4>Author name</h4>
-                            <input type='text' placeholder='Enter Author Name' className='CreateCourseAddAuthor' onChange={newAuthorHandler}/>
+                            <input type='text' placeholder='Enter Author Name' className='CreateCourseAddAuthor' onChange={newAuthorHandler} value={newAuthorName}/>
                             <Button title='Create Author' onClickFunction={addNewAuthorHandler}/>
                         </div>
                         <div className='Duration'>
