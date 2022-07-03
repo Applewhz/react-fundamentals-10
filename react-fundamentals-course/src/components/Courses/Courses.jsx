@@ -77,19 +77,6 @@ export const Courses = (props) => {
         console.log(event.target.value)
     }
 
-    // const searchSubmitHandler = (event) => {
-    //     event.preventDefault();
-    //     setCourseList(courseList.filter((value) => {
-    //         if(searchTerm === ''){
-    //             return value;
-    //         } else if(value.title.toLocaleLowerCase().includes(searchTerm.toLocaleLowerCase()) || value.id.includes(searchTerm)){
-    //             return value;
-    //         } else {
-    //             return;
-    //         }
-    //     }))
-    // }
-
     const searchSubmitHandler = (event) => {
         console.log('coming here?')
         event.preventDefault();
@@ -104,10 +91,6 @@ export const Courses = (props) => {
         }))
     }
 
-    // const addCourseHandler = (event) => {
-    //     event.preventDefault()
-    //     navigate('/courses');
-    // }
     const displayCourses = () => {
         return displayCourseList.map((data) => 
         <div>

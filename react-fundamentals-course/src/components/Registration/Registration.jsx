@@ -46,6 +46,7 @@ const Registration = () => {
         }
     }
     
+
     const postUserRegistrationDetails = async () => {
         axios
             .post('http://localhost:4000/register', userDetails)
@@ -57,6 +58,7 @@ const Registration = () => {
             })
             .catch((error) => {
             console.log(error);
+            alert('Sorry, Sign up failed. Please try again')
             });
     }
 
