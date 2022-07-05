@@ -13,7 +13,7 @@ const AppRoutes = (props) => {
     <Router forceRefresh={true}>
         <Header />
       <Routes>
-        <Route exact path='/' element={<Home />}/>
+        <Route exact path='/' element={<Login />}/>
         <Route path='/login' element={<Login />}/>
         <Route exact path='/courses' element={<Courses courseList={props.courseList} authorList={props.authorList}/>}/>
         <Route path='/courses/add' element={<CreateCourse courseList={props.courseList} authorList={props.authorList} addCourseHandler={props.addCourseHandler} addAuthorHandler={props.addAuthorHandler}/>}/>
