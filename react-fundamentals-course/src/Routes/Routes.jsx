@@ -7,7 +7,6 @@ import { Courses } from '../components/Courses/Courses'
 import Home from '../components/Home/Home'
 import { CreateCourse } from '../components/CreateCourse/CreateCourse'
 import { Header } from '../components/Header/Header'
-import { faTemperature4 } from '@fortawesome/free-solid-svg-icons'
 
 const AppRoutes = (props) => {
   return (

@@ -3,7 +3,6 @@ import { Logo } from "./components/Logo/Logo";
 import { Button } from "../../common/Button/Button";
 import './Header.css'; 
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
 import { useState, useEffect } from "react";
 
 export const Header = () => {
@@ -13,11 +12,11 @@ export const Header = () => {
     const [loginStatus, setLoginStatus] = useState('');
     
     useEffect(() => {
-        setUserNameData(localStorage.name)
+        localStorage.clear()
     }, [])
 
     useEffect(() => {
-        setLoginStatus('Logout');
+        localStorage.length > 0 ? setLoginStatus('Logout') : setLoginStatus('Login')
     }, [localStorage.name, userNameData])
 
     useEffect(() => {
@@ -27,17 +26,16 @@ export const Header = () => {
     const onClickHandler = (event) => {
         event.preventDefault()
         if(loginStatus === 'Logout'){
+            console.log(localStorage)
             localStorage.clear()
             setLoginStatus('Login');
             setUserNameData('');
             navigate('/login');
         } else {
-            setLoginStatus('Logout');
+            localStorage.length > 0 ? setLoginStatus('Logout') : setLoginStatus('Login')
         }
     }
 
-    
-    if(localStorage.length > 0){
         return (
             <div className='header'>
                 <div className='logo'>
@@ -45,19 +43,8 @@ export const Header = () => {
                 </div>
                 <div className='button'> 
                     <p className='userName'>{userNameData}</p>
-                    {/* <Link to='./login'> */}
-                        <Button title={loginStatus} onClickFunction={onClickHandler}/>
-                    {/* </Link> */}
+                    <Button title={loginStatus} onClickFunction={onClickHandler}/>
                 </div>
             </div>        
         )
-    } else {
-        return (
-            <div className='header'>
-                <div className='logo'>
-                    <Logo />
-                </div>
-            </div>        
-        )
-    }
 }

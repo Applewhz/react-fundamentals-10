@@ -7,7 +7,6 @@ import { CreateCourse } from "../CreateCourse/CreateCourse";
 import { displayDurationInHoursAndMinutes } from '../../helpers/getCourseDuration';
 import './Courses.css';
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
 // import {mockedCoursesList, mockedAuthorsList} from '../../constants/MockedData'
 
 
