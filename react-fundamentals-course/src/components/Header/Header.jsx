@@ -4,32 +4,49 @@ import { Button } from "../../common/Button/Button";
 import './Header.css'; 
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import userAction from "../../store/users/action";
 
 export const Header = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const userName = useSelector((state) => state.user.userDetails.name);
+    const isLogged = useSelector((state) => state.user.isAuth);
     const [userNameData, setUserNameData] = useState('');
     const [loginStatus, setLoginStatus] = useState('');
     
     useEffect(() => {
-        localStorage.clear()
-    }, [])
+        setUserNameData(userName);
+      }, [userName]);
+    
+      useEffect(() => {
+        if (isLogged) {
+          setLoginStatus("Logout");
+        } else {
+          setLoginStatus("Login");
+        }
+      }, [isLogged]);
+    // useEffect(() => {
+    //     localStorage.clear()
+    // }, [])
 
-    useEffect(() => {
-        localStorage.length > 0 ? setLoginStatus('Logout') : setLoginStatus('Login')
-    }, [localStorage.name, userNameData])
+    // useEffect(() => {
+    //     localStorage.length > 0 ? setLoginStatus('Logout') : setLoginStatus('Login')
+    // }, [localStorage.name, userNameData])
 
-    useEffect(() => {
-        setUserNameData(localStorage.name)
-    }, [loginStatus, localStorage.name, userNameData])
+    // useEffect(() => {
+    //     setUserNameData(localStorage.name)
+    // }, [loginStatus, localStorage.name, userNameData])
 
     const onClickHandler = (event) => {
         event.preventDefault()
         if(loginStatus === 'Logout'){
             console.log(localStorage)
             localStorage.clear()
-            setLoginStatus('Login');
-            setUserNameData('');
+            dispatch(userAction.logout());
+            // setLoginStatus('Login');
+            // setUserNameData('');
             navigate('/login');
         } else {
             localStorage.length > 0 ? setLoginStatus('Logout') : setLoginStatus('Login')

@@ -1,20 +1,29 @@
 import React from "react";
 import { Button } from "../../common/Button/Button";
 import { Input } from "../../common/Input/Input";
-import { Header } from "../Header/Header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './Registration.css';
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useDispatch, useSelector } from "react-redux";
+import userAction from "../../store/users/action";
 
 const Registration = () => {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const registrationStatus = useSelector((state) => state.user.isCreated)
+    const [userCreated, setUserCreated ] = useState(false)
     const [userDetails, setUserDetails] = useState({
         name: '',
         email: '',
         password: ''
     })
+
+    useEffect(() => {
+        setUserCreated(registrationStatus)
+        // console.log('user created:', registrationStatus)
+    },[registrationStatus])
 
     const emailHandler = (event) => {
         setUserDetails((prevState) => {
@@ -47,25 +56,26 @@ const Registration = () => {
     }
     
 
-    const postUserRegistrationDetails = async () => {
-        axios
-            .post('http://localhost:4000/register', userDetails)
-            .then((response) => {
-            console.log(response);
-            navigate('/login');
-            console.log(response.data.result);
-            // localStorage.setItem('token', response.data.result);
-            })
-            .catch((error) => {
-            console.log(error);
-            alert('Sorry, Sign up failed. Please try again')
-            });
-    }
+    // const postUserRegistrationDetails = async () => {
+    //     axios
+    //         .post('http://localhost:4000/register', userDetails)
+    //         .then((response) => {
+    //         console.log(response);
+    //         navigate('/login');
+    //         console.log(response.data.result);
+    //         // localStorage.setItem('token', response.data.result);
+    //         })
+    //         .catch((error) => {
+    //         console.log(error);
+    //         alert('Sorry, Sign up failed. Please try again')
+    //         });
+    // }
 
     const onSubmitRegistration = (event) => {
         event.preventDefault()
         if(registrationCredentialCheck(userDetails.name, userDetails.email, userDetails.password)){
-            postUserRegistrationDetails()
+            dispatch(userAction.addNewUser(userDetails))
+            userCreated ? navigate('/courses') : null;
         } else {
             alert('Please check input fields')
         }
