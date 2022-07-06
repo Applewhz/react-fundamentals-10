@@ -43,7 +43,9 @@ export const Header = () => {
                 </div>
                 <div className='button'> 
                     <p className='userName'>{userNameData}</p>
-                    <Button title={loginStatus} onClickFunction={onClickHandler}/>
+                    {localStorage.length > 0 &&
+                        <Button title={loginStatus} onClickFunction={onClickHandler}/>
+                    }
                 </div>
             </div>        
         )

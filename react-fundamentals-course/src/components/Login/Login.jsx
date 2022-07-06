@@ -35,8 +35,8 @@ const Login = () => {
             console.log(response.data.result);
             localStorage.setItem('token', response.data.result.replace('Bearer', '').trim());
             localStorage.setItem('name', response.data.user.name)
-            console.log(localStorage)
-            navigate('/courses');
+            console.log(localStorage.token)
+            localStorage.token ? navigate('/courses') : null;
           })
           .catch((error) => {
             console.log('over here error')
@@ -60,7 +60,7 @@ const Login = () => {
                     </div>
                     <div className='LoginCredentials'>
                         <p>Password</p>
-                        <Input placeholder='Enter Password'className='LoginCredentialsInput' onChange={passwordHandler} />
+                        <Input placeholder='Enter Password'className='LoginCredentialsInput' onChange={passwordHandler} type="password"/>
                     </div>
                 <div className='LoginButton'>
                     <Button title='Login' type='submit'/>

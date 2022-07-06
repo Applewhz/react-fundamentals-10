@@ -91,8 +91,8 @@ export const Courses = (props) => {
     }
 
     const displayCourses = () => {
-        return displayCourseList.map((data) => 
-        <div>
+        return displayCourseList.map((data, key) => 
+        <div key={data.id}>
             <CourseCard 
                  title={data.title} 
                  description={data.description} 

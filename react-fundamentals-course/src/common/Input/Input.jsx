@@ -14,7 +14,7 @@ export const Search = (props) => {
 export const Input = (props) => {
     return (
         <div>
-            <input type='text' placeholder={props.placeholder} onChange={props.onChange} className='LoginCredentialsInput' required/>
+            <input type={props.type ? props.type : 'text'} placeholder={props.placeholder} onChange={props.onChange} className='LoginCredentialsInput' required/>
         </div>
     )
 }
