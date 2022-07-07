@@ -6,19 +6,47 @@ import CourseInfo from '../components/CourseInfo/CourseInfo'
 import { Courses } from '../components/Courses/Courses'
 import { CreateCourse } from '../components/CreateCourse/CreateCourse'
 import { Header } from '../components/Header/Header'
+import PropTypes from 'prop-types'
+import { Navigate, useLocation} from "react-router-dom";
 
-const AppRoutes = (props) => {
+export const ProtectedRoute = ({children}) => {
+  let location = useLocation();
+  if(!localStorage.getItem("token")){
+    return <Navigate  to="/login" state={{ from: location }}  replace />;
+  }
+  return children;
+};
+
+
+
+const AppRoutes = () => {
   return (
     <Router forceRefresh={true}>
         <Header />
       <Routes>
         <Route exact path='/' element={<Login />}/>
         <Route path='/login' element={<Login />}/>
-        <Route exact path='/courses' element={<Courses courseList={props.courseList} authorList={props.authorList}/>}/>
-        <Route path='/courses/add' element={<CreateCourse courseList={props.courseList} authorList={props.authorList} addCourseHandler={props.addCourseHandler} addAuthorHandler={props.addAuthorHandler}/>}/>
-        <Route path='/courses/:id' element={<CourseInfo courseList={props.courseList} authorList={props.authorList} />}/>
         <Route path='/register' element={<Registration />}/>
-        <Route path='/courseInfo' element={<CourseInfo />}/>
+        <Route exact path='/courses' element={
+        <ProtectedRoute>
+          <Courses />
+        </ProtectedRoute>
+        }/>
+        <Route path='/courses/add' element={
+          <ProtectedRoute>
+            <CreateCourse />
+          </ProtectedRoute>
+        }/>
+        <Route path='/courses/:id' element={
+          <ProtectedRoute>
+            <CourseInfo />
+          </ProtectedRoute>
+        }/>
+        <Route path='/courseInfo' element={
+          <ProtectedRoute>
+            <CourseInfo />
+          </ProtectedRoute>
+        }/>
       </Routes>
     </Router>
   )

@@ -38,6 +38,7 @@ function* createNewAuthorGenerator({ payload }) {
 }
 
 const createNewAuthor = async (newAuthor) => {
+    console.log('IN CREATE AUTHOR', localStorage.token)
     return (
         axiosInstance.post('/authors/add', newAuthor, {
             headers: { Authorization: `${localStorage.token}` },

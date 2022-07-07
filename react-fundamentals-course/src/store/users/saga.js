@@ -1,6 +1,6 @@
 import { put, takeLeading } from 'redux-saga/effects';
 import axiosInstance from '../AxiosConfig';
-import userAction from './action';
+import userAction from './actions';
 import actionType from './types';
 
 function* addNewUserGenerator({ payload }) {
@@ -30,7 +30,7 @@ function* userLoginGenerator({ payload }) {
     try {
         const resp = yield postUserLoginDetails(payload.data)
         yield put(userAction.userLoginSuccess(resp.data, 'SUCCESS'))
-        // console.log('over here!!!!', resp)
+        console.log('SUCCESS!!!!', resp)
         // console.log('over here', resp.data)
         // console.log('in UserLogin saga: ', resp.data.user)
     } catch (error) {

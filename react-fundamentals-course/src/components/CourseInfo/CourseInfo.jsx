@@ -1,22 +1,48 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link, useParams, Redirect } from "react-router-dom";
 import './CourseInfo.css';
 import { displayDurationInHoursAndMinutes } from '../../helpers/getCourseDuration';
+import { useDispatch, useSelector } from "react-redux";
+import coursesAction from "../../store/courses/actions";
+// import { Button } from "../Button/Button";
+// import UpdateCourseInfo from "../UpdateCourseInfo/UpdateCourseInfo";
 
-const CourseInfo = (props) => {
+const CourseInfo = () => {
 
-    const [courseListData, setCourseListData] = useState(props.courseList);
-    const [courseData, setCourseData] = useState('');
-    const [authorList, setAuthorList] = useState(props.authorList);
     const { id } = useParams()
+    const dispatch = useDispatch();
+    const courseDetail = useSelector((state) => state.courses.courseDetail);
+    const authors = useSelector((state) => state.authors.authorList);
+    const courseDeleteStatus = useSelector((state) => state.courses.isDeleted);
+    const courseUpdateStatus = useSelector((state) => state.courses.isUpdated);
 
-    console.log(courseListData)
+    const [isDeleted, setisDeleted] = useState(false);
+    const [courseListData, setCourseListData] = useState([]);
+    const [courseData, setCourseData] = useState('');
+    const [authorList, setAuthorList] = useState([]);
+    const [updateStatus, setUpdateStatus] = useState(true);
+    
     useEffect(() => {
-        setCourseListData(props.courseList)
-        setAuthorList(props.authorList);
-    },[props.courseList, props.authorList])
+        setisDeleted(courseDeleteStatus);
+    }, [courseDeleteStatus]);
+    
+    useEffect(() => {
+        dispatch(coursesAction.getCourseDetail(id));
+        setUpdateStatus(courseUpdateStatus);
+    }, [courseUpdateStatus, id, dispatch]);
+    
+    useEffect(() => {
+        setAuthorList(authors);
+    }, [authors]);
+    
+    useEffect(() => {
+        setCourseData(courseDetail);
+    }, [courseDetail]);
 
+    useEffect(() => {
+        getCourseData()
+    },[])
 
     const getCourseData = () => {
         let currentCourse = {}
@@ -29,11 +55,6 @@ const CourseInfo = (props) => {
         })
         setCourseData(currentCourse)
     }
-
-
-    useEffect(() => {
-        getCourseData()
-    },[])
 
     const displayAuthorName = () => {
         const authorsArray = [];
@@ -65,8 +86,16 @@ const CourseInfo = (props) => {
         return authorName; 
     }
 
+    const updateCourseHandler = () => {
+        dispatch(coursesAction.updateCurrentCourse());
+    };
+    
+    const deleteCourseHandler = () => {
+        dispatch(coursesAction.deleteCourse(courseData.id));
+    };
+
     return (
-        <div>
+        <div key={id}>
             <div className='courseInfo'>
                 <div className='courseInfoTopSegment'>
                     <div className='Back'>

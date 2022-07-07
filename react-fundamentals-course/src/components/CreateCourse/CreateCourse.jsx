@@ -6,23 +6,48 @@ import { v4 as uuidv4 } from 'uuid';
 import { displayDurationInHoursAndMinutes } from '../../helpers/getCourseDuration'
 import axios from 'axios'
 import { Input } from "../../common/Input/Input";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import authorsAction from "../../store/authors/actions";
+import coursesAction from "../../store/courses/actions";
 
-export const CreateCourse = (props) =>{
+export const CreateCourse = () =>{
 
     const navigate = useNavigate();
-    const [authorList, setAuthorList] = useState(props.authorList);
+    const dispatch = useDispatch()
+    const authors = useSelector((state) => state.authors.authorList)
+    const [authorList, setAuthorList] = useState([]);
     const [title , setTitle] = useState('')
     const [description , setDescription] = useState('')
     const [timeDuration , setTimeDuration] = useState(0)
-    const [courseAuthorList , setCourseAuthorList] = useState(props.authorList.map(data => data.id))
+    const [courseAuthorList , setCourseAuthorList] = useState([])
     const [selectedAuthorList , setSelectedAuthorList] = useState([])
     const [newAuthorName , setNewAuthorName] = useState('')
+    // const [courseCreated, setCourseCreated ] = useState(false)
+    const createNewCourseStatus = useSelector((state) => state.courses.createNewCourseStatus)
 
     useEffect(() => {
-        setCourseAuthorList(props.authorList.map(data => data.id))
-        setAuthorList(props.authorList)
-    },[props.authorList])
+        dispatch(authorsAction.getAuthorList())
+    },[dispatch])
+
+    useEffect(() => {
+        setAuthorList(authors)
+        setCourseAuthorList(authors)
+    },[authors])
+
+    useEffect(() => {
+      setCourseAuthorList(getAuthorID(authorList))
+    },[authorList])
+
+    // useEffect(() => {
+    //     setCourseCreated(createNewCourseStatus)
+    //     // console.log('user created:', registrationStatus)
+    // },[createNewCourseStatus])
+
+    // useEffect(() => {
+    //     setCourseAuthorList(props.authorList.map(data => data.id))
+    //     setAuthorList(props.authorList)
+    // },[props.authorList])
 
     const titleChangeHandler = (event) => {
         setTitle(event.target.value)
@@ -40,12 +65,24 @@ export const CreateCourse = (props) =>{
             setNewAuthorName(event.target.value)
     }
 
+    const getAuthorID = (authorListObject) => {
+        let authorIDList = [];
+        authorListObject.map(data => {
+            return authorIDList.push(data.id)
+        })
+        return authorIDList;
+    }
+
     const addNewAuthorHandler = (event) => {
         event.preventDefault();
         if(newAuthorName === '' || newAuthorName.trim().length < 2){
             return;
         } else {
-            props.addAuthorHandler({id : uuidv4(), name: newAuthorName});
+            const newAuthor = {
+                "name": newAuthorName,
+                id: uuidv4(),
+            }
+            dispatch(authorsAction.postNewAuthor({name: newAuthor.name}))
             setNewAuthorName('')
         }
     }
@@ -138,7 +175,7 @@ export const CreateCourse = (props) =>{
                 duration: timeDuration,
                 authors: selectedAuthorList,
             }
-            props.addCourseHandler(newCourse)
+            dispatch(coursesAction.postNewCourse(newCourse))
             navigate('/courses');
             
         }

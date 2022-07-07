@@ -6,7 +6,7 @@ import './Registration.css';
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useDispatch, useSelector } from "react-redux";
-import userAction from "../../store/users/action";
+import userAction from "../../store/users/actions";
 
 const Registration = () => {
 

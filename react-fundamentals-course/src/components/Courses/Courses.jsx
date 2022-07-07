@@ -6,17 +6,39 @@ import { Button } from "../../common/Button/Button";
 import { CreateCourse } from "../CreateCourse/CreateCourse";
 import { displayDurationInHoursAndMinutes } from '../../helpers/getCourseDuration';
 import './Courses.css';
-import { Link, useNavigate } from 'react-router-dom'
-// import {mockedCoursesList, mockedAuthorsList} from '../../constants/MockedData'
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux";
+import authorsAction from "../../store/authors/actions";
+import coursesAction from "../../store/courses/actions";
+import userAction from "../../store/users/actions";
 
 
-export const Courses = (props) => {
+export const Courses = () => {
 
-    const navigate = useNavigate();
+    const dispatch = useDispatch()
+    const courses = useSelector((state) => state.courses.courseList)
+    const authors = useSelector((state) => state.authors.authorList)
+
     const [searchTerm, setSearchTerm] = useState('');
-    const [courseList, setCourseList] = useState(props.courseList);
-    const [displayCourseList, setDisplayCourseList] = useState(props.courseList);
-    const [authorList, setAuthorList] = useState(props.authorList)
+    const [courseList, setCourseList] = useState([]);
+    const [displayCourseList, setDisplayCourseList] = useState([]);
+    const [authorList, setAuthorList] = useState([])
+
+    useEffect(() => {
+        dispatch(coursesAction.getCourseList())
+        dispatch(authorsAction.getAuthorList())
+        dispatch(userAction.userDetails())
+      },[dispatch])
+    
+      
+      useEffect(() => {
+        setCourseList(courses)
+        setDisplayCourseList(courses)
+      },[courses])
+    
+      useEffect(() => {
+        setAuthorList(authors)
+      },[authors])
 
     // const getAllCourseData = async() => {
     //     axios.get('http://localhost:4000/courses/all').then(res => {
@@ -91,7 +113,7 @@ export const Courses = (props) => {
     }
 
     const displayCourses = () => {
-        return displayCourseList.map((data, key) => 
+        return displayCourseList.map((data) => 
         <div key={data.id}>
             <CourseCard 
                  title={data.title} 
@@ -105,18 +127,7 @@ export const Courses = (props) => {
              
          )       
      }
-
-    // useEffect(() => {
-    //     setCourseList(props.courseList)
-    // },[props.courseList])
-    
-    // if(showAddCourseScreen){
-    //     return (
-    //         <div>
-    //             <CreateCourse authorList={props.authorList} addNewCourseHandler={addNewCourseHandler} addNewAuthorHandler={addNewAuthorHandler}/>
-    //         </div>
-    //     )
-    // } else {
+   
         return (
             <div className='Body'>
               <div className='BodyHeader'>

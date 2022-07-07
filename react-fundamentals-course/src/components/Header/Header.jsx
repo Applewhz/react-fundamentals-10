@@ -5,7 +5,7 @@ import './Header.css';
 import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import userAction from "../../store/users/action";
+import userAction from "../../store/users/actions";
 
 export const Header = () => {
 

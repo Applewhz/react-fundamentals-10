@@ -3,7 +3,6 @@ import actionType from "./types";
 const initialState = {
     users: [],
     userDetails: [],
-    role: "",
     token: "",
     isAuth: false,
     infoRetrieved: false,
@@ -55,7 +54,7 @@ const usersReducer = (state = initialState, action) => {
                 loading: true,
             };
         case actionType.USER_LOGIN_SUCCESS:
-            localStorage.setItem("token", action.payload.data.result.replace('Bearer', '').trim());
+            localStorage.setItem("token", action.payload.data.result);
             return {
                 ...state,
                 userDetails: action.payload.data.user,
@@ -78,7 +77,6 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userDetails: action.payload.data,
-                role: action.payload.data.role,
                 infoRetrieved: true,
                 loading: false,
             };
