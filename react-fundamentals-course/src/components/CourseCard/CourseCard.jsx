@@ -3,8 +3,23 @@ import { Button } from "../../common/Button/Button";
 import { formatDate } from "../../helpers/formatCreationDate";
 import './CourseCard.css'; 
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from "react-redux";
+import coursesAction from "../../store/courses/actions";
 
 export const CourseCard = (props) => {
+
+    const dispatch = useDispatch()
+    const updateHandler = () => {
+        console.log('TO UPDATE PAGE')
+        // dispatch(coursesAction.updateCourse())
+    }
+
+    const deleteHandler = (event) => {
+        event.preventDefault()
+        dispatch(coursesAction.deleteCourse(props.id))
+    }
 
     return (
         <div className='CourseCardContainer'>
@@ -28,9 +43,17 @@ export const CourseCard = (props) => {
                     </div>
                 </div>
                 <div className='ButtonContainer'>
-                    <Link to={`/courses/${props.id}`}>
-                        <Button title='Show Course' />
-                    </Link>
+                    <div>
+                        <Link to={`/courses/${props.id}`}>
+                            <Button title='Show Course' />
+                        </Link>
+                    </div>
+                    <div className='EditAndDeleteButtonContainer'>
+                        <FontAwesomeIcon icon={faPen} onClick={updateHandler}/>   
+                    </div>
+                    <div className='EditAndDeleteButtonContainer'>
+                        <FontAwesomeIcon icon={faTrash} onClick={deleteHandler}/>
+                    </div>
                 </div>
             </div>
         </div>

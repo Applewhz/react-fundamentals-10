@@ -61,9 +61,10 @@ function* createNewCourseGenerator({ payload }) {
 }
 
 const createNewCourse = async (newCourse) => {
+    console.log('IN CREATE SAGA >>>>', localStorage.token.replace('Bearer', '').trim())
     return (
         axiosInstance.post(`/courses/add`, newCourse, {
-            headers: { Authorization: `${localStorage.token}` },
+            headers: { Authorization: `${localStorage.token.replace('Bearer', '').trim()}` },
         })
     )
 }

@@ -168,10 +168,10 @@ export const CreateCourse = () =>{
             const today = new Date();
             const date = today.getDate() + '/' + parseInt(today.getMonth() + 1) + '/' + today.getFullYear();
             const newCourse = {
-                id: uuidv4(),
+                // id: uuidv4(),
                 title: title,
                 description: description,
-                creationDate: date,
+                // creationDate: date,
                 duration: timeDuration,
                 authors: selectedAuthorList,
             }

@@ -25,12 +25,19 @@
   }
   
   .ButtonContainer {
-    /* align-self: center;
-      justify-self: center; */
-    padding: 0 20% 2% 20%;
-    /* padding-bottom: 10px; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
   }
   
+  .EditAndDeleteButtonContainer {
+    border: 3px solid purple;
+    padding: 5px;
+    margin-left: 10px;
+  }
+
   .RightSegments {
     /* background-color: purple; */
     display: flex;
