@@ -20,7 +20,6 @@ export const UpdateCourseInfo = () =>{
     const courses = useSelector((state) => state.courses.courseList)
 
     const [courseData, setCourseData] = useState('')
-    console.log('OVER EHRE >>>', courseData)
     const [title , setTitle] = useState(courseDetail.title)
     const [description , setDescription] = useState(courseDetail.description)
     const [timeDuration , setTimeDuration] = useState(courseDetail.duration)
@@ -29,26 +28,10 @@ export const UpdateCourseInfo = () =>{
     const [courseAuthorList , setCourseAuthorList] = useState([])
     const [newAuthorName , setNewAuthorName] = useState('')
     const [courseUpdated, setcourseUpdated ] = useState(false)
-    // const [courseData, setCourseData] = useState('')
 
     useEffect(() => {
         dispatch(coursesAction.getCourseDetail(id))
     }, [])
-
-    // useEffect(() => {
-    //     dispatch(coursesAction.getCourseDetail(id))
-    // }, [id, dispatch])
-
-    // useEffect(() => {
-    //     dispatch(coursesAction.getCourseDetail(id))
-    //     setAuthorList(authors)
-    //     // getCourseData()
-    // },[courseDetail])
-
-    // useEffect(() => {
-    //     dispatch(authorsAction.getAuthorList())
-    //     dispatch(coursesAction.getCourseDetail(id))
-    // },[dispatch])
 
     useEffect(() => {
         setAuthorList(authors)
@@ -65,33 +48,6 @@ export const UpdateCourseInfo = () =>{
     useEffect(() => {
         setCourseData(courseDetail);
     }, [courseDetail])
-
-    // useEffect(() => {
-    //     getCourseData()
-    // },[])
-
-    // const getCourseData = () => {
-    //     let currentCourse = {}
-    //     courseListData.forEach(course => {
-    //         if(course.id === id) {
-    //             return currentCourse = course 
-    //         } else {
-    //             return
-    //         }
-    //     })
-    //     setCourseData(currentCourse)
-    // }
-    // const getCourseData = () => {
-    //     let currentCourse = {}
-    //     courses.forEach(course => {
-    //         if(course.id === id) {
-    //             return currentCourse = course 
-    //         } else {
-    //             return
-    //         }
-    //     })
-    //     setCourseData(currentCourse)
-    // }
 
     const getAuthorID = (authorListObject) => {
         let authorIDList = [];
@@ -223,8 +179,6 @@ export const UpdateCourseInfo = () =>{
                 duration: timeDuration,
                 authors: selectedAuthorList,
             }  
-            // console.log('dispatching updated Course!' , updatedCourse)
-            // console.log(props.dataProps.id)
             dispatch(coursesAction.updateCourse(id , {
                 title: updatedCourse.title,
                 description: updatedCourse.description,

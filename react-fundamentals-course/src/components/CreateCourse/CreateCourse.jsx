@@ -39,16 +39,6 @@ export const CreateCourse = () =>{
       setCourseAuthorList(getAuthorID(authorList))
     },[authorList])
 
-    // useEffect(() => {
-    //     setCourseCreated(createNewCourseStatus)
-    //     // console.log('user created:', registrationStatus)
-    // },[createNewCourseStatus])
-
-    // useEffect(() => {
-    //     setCourseAuthorList(props.authorList.map(data => data.id))
-    //     setAuthorList(props.authorList)
-    // },[props.authorList])
-
     const titleChangeHandler = (event) => {
         setTitle(event.target.value)
     }

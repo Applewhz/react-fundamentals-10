@@ -46,35 +46,6 @@ export const Courses = () => {
         setuserRole(role);
       }, [role]);
 
-    // const getAllCourseData = async() => {
-    //     axios.get('http://localhost:4000/courses/all').then(res => {
-    //         setCourseList(res.data.result);
-    //         setDisplayCourseList(res.data.result);
-    //         console.log(res.data.result)
-    //     }).catch(error => {
-    //         console.log(error);
-    //     });
-    // }
-
-    // const getAllAuthorsData = async() => {
-    //     axios.get('http://localhost:4000/authors/all').then(res => {
-    //         setAuthorList(res.data.result);
-    //         console.log(res.data.result)
-    //     }).catch(error => {
-    //         console.log(error);
-    //     });
-    // }
-
-    // useEffect(() => {
-    //     getAllCourseData();
-    //     getAllAuthorsData();
-    // },[])
-    
-    // useEffect(() => {
-    //     getAllCourseData()
-    // },[])
-
-
     const getAuthorName = (authorCodeArray) => {
         const authorsArray = [];
         let authorsArrayCounter = 1;
