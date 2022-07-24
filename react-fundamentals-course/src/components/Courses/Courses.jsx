@@ -18,7 +18,9 @@ export const Courses = () => {
     const dispatch = useDispatch()
     const courses = useSelector((state) => state.courses.courseList)
     const authors = useSelector((state) => state.authors.authorList)
-
+    const role = useSelector((state) => state.user.role);
+    
+    const [userRole, setuserRole] = useState("");
     const [searchTerm, setSearchTerm] = useState('');
     const [courseList, setCourseList] = useState([]);
     const [displayCourseList, setDisplayCourseList] = useState([]);
@@ -39,6 +41,10 @@ export const Courses = () => {
       useEffect(() => {
         setAuthorList(authors)
       },[authors])
+
+      useEffect(() => {
+        setuserRole(role);
+      }, [role]);
 
     // const getAllCourseData = async() => {
     //     axios.get('http://localhost:4000/courses/all').then(res => {
@@ -124,22 +130,21 @@ export const Courses = () => {
                  id={data.id}
              /> 
         </div>
-             
-         )       
-     }
-   
-        return (
-            <div className='Body'>
-              <div className='BodyHeader'>
-                  <Search placeholder='Enter Course Name....' onChange={searchHandler} onClick={searchSubmitHandler}/>
-                  <div className='AddCourseButton'>
-                        <Link to='/courses/add'>
-                            <Button title='Add New Course' />
-                        </Link>
-                  </div>
-              </div>
-              {displayCourses()}
+        )       
+    }
+    return (
+      <div className='Body'>
+        <div className='BodyHeader'>
+          <Search placeholder='Enter Course Name....' onChange={searchHandler} onClick={searchSubmitHandler}/>
+          {userRole === 'admin' && (
+            <div className='AddCourseButton'>
+              <Link to='/courses/add'>
+                <Button title='Add New Course' />
+              </Link>
             </div>
-        )
-    // }
+          )}
+          </div>
+            {displayCourses()}
+          </div>
+    )
 }

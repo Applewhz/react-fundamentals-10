@@ -1,41 +1,49 @@
-import './App.css';
+import './App.css'
 import { Outlet } from 'react-router-dom'
-import AppRoutes from './Routes/Routes';
-import { useState, useEffect } from 'react';
+import AppRoutes from './Routes/Routes'
+import { useState, useEffect } from 'react'
 import {mockedCoursesList, mockedAuthorsList} from './constants/MockedData'
+import { useSelector } from 'react-redux'
+
 
 function App() {
-  const [courseList, setCourseList] = useState(mockedCoursesList);
-  const [authorList, setAuthorList] = useState(mockedAuthorsList);
+  const role = useSelector((state) => state.user.role)
+  const [courseList, setCourseList] = useState(mockedCoursesList)
+  const [authorList, setAuthorList] = useState(mockedAuthorsList)
+  const [userRole, setuserRole] = useState("")
 
   useEffect(() => {
-    setCourseList(courseList)
-  },[courseList])
+      setuserRole(role);
+  }, [role])
 
-  useEffect(() => {
-    setAuthorList(authorList)
-  },[authorList])
+  // useEffect(() => {
+  //   setCourseList(courseList)
+  // },[courseList])
 
-  const addCourseHandler = (newCourse) => {
+  // useEffect(() => {
+  //   setAuthorList(authorList)
+  // },[authorList])
+
+  // const addCourseHandler = (newCourse) => {
     
-    setCourseList(prevCourseList => {
-      return (
-        [...prevCourseList, newCourse]
-      )
-    })
-  }
+  //   setCourseList(prevCourseList => {
+  //     return (
+  //       [...prevCourseList, newCourse]
+  //     )
+  //   })
+  // }
 
-  const addAuthorHandler = (newAuthor) => {
-    setAuthorList(prevAuthorList => {
-      return (
-        [...prevAuthorList, newAuthor] 
-      )
-    })
-    return authorList;
-  }
+  // const addAuthorHandler = (newAuthor) => {
+  //   setAuthorList(prevAuthorList => {
+  //     return (
+  //       [...prevAuthorList, newAuthor] 
+  //     )
+  //   })
+  //   return authorList;
+  // }
   return (
     <div className="App">  
-      <AppRoutes courseList={courseList} authorList={authorList} addCourseHandler={addCourseHandler} addAuthorHandler={addAuthorHandler}/>
+      <AppRoutes role={userRole}/>
       <Outlet />
     </div>
   );

@@ -13,7 +13,7 @@ import coursesAction from "../../store/courses/actions";
 
 export const CreateCourse = () =>{
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const authors = useSelector((state) => state.authors.authorList)
     const [authorList, setAuthorList] = useState([]);
@@ -23,7 +23,7 @@ export const CreateCourse = () =>{
     const [courseAuthorList , setCourseAuthorList] = useState([])
     const [selectedAuthorList , setSelectedAuthorList] = useState([])
     const [newAuthorName , setNewAuthorName] = useState('')
-    // const [courseCreated, setCourseCreated ] = useState(false)
+    const [courseCreated, setCourseCreated ] = useState(false)
     const createNewCourseStatus = useSelector((state) => state.courses.createNewCourseStatus)
 
     useEffect(() => {
@@ -168,16 +168,19 @@ export const CreateCourse = () =>{
             const today = new Date();
             const date = today.getDate() + '/' + parseInt(today.getMonth() + 1) + '/' + today.getFullYear();
             const newCourse = {
-                // id: uuidv4(),
+                id: uuidv4(),
                 title: title,
                 description: description,
-                // creationDate: date,
+                creationDate: date,
                 duration: timeDuration,
                 authors: selectedAuthorList,
             }
-            dispatch(coursesAction.postNewCourse(newCourse))
-            navigate('/courses');
-            
+            dispatch(coursesAction.postNewCourse({
+                title: newCourse.title,
+                description: newCourse.description,
+                duration: Number(newCourse.duration),
+                authors: newCourse.authors
+            }))
         }
         
     }
@@ -192,6 +195,7 @@ export const CreateCourse = () =>{
                     </div>
                     <div className='CreateCourseButton'>
                         <Button title='Create Course' type='submit' />
+                        {courseCreated ? navigate('/courses') : null}
                     </div>
                 </div>
                 <div className='Description'>

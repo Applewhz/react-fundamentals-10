@@ -7,22 +7,28 @@ import { Courses } from '../components/Courses/Courses'
 import { CreateCourse } from '../components/CreateCourse/CreateCourse'
 import { Header } from '../components/Header/Header'
 import PropTypes from 'prop-types'
-import { Navigate, useLocation} from "react-router-dom";
+import { Navigate, useLocation } from 'react-router-dom'
 
-export const ProtectedRoute = ({children}) => {
-  let location = useLocation();
-  if(!localStorage.getItem("token")){
-    return <Navigate  to="/login" state={{ from: location }}  replace />;
+export const ProtectedRoute = ({ children }) => {
+  let location = useLocation()
+  if (!localStorage.getItem('token')) {
+    return <Navigate to='/login' state={{ from: location }} replace />
   }
-  return children;
-};
+  return children
+}
 
+export const ProtectedAdminRoute = ({ children }, role) => {
+  let location = useLocation()
+  if (!role === 'admin') {
+    return <Navigate to='/courses' state={{ from: location }} replace />
+  } 
+  return children
+}
 
-
-const AppRoutes = () => {
+const AppRoutes = ({role}) => {
   return (
     <Router forceRefresh={true}>
-        <Header />
+      <Header />
       <Routes>
         <Route exact path='/' element={<Login />}/>
         <Route path='/login' element={<Login />}/>
@@ -34,7 +40,9 @@ const AppRoutes = () => {
         }/>
         <Route path='/courses/add' element={
           <ProtectedRoute>
-            <CreateCourse />
+            <ProtectedAdminRoute role={role}>
+              <CreateCourse />
+            </ProtectedAdminRoute>
           </ProtectedRoute>
         }/>
         <Route path='/courses/:id' element={

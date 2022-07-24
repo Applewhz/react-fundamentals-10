@@ -1,19 +1,28 @@
-import React from "react";
-import { Button } from "../../common/Button/Button";
-import { formatDate } from "../../helpers/formatCreationDate";
-import './CourseCard.css'; 
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from "react-redux";
-import coursesAction from "../../store/courses/actions";
+import React, {useEffect, useState} from "react"
+import { Button } from "../../common/Button/Button"
+import { formatDate } from "../../helpers/formatCreationDate"
+import './CourseCard.css'
+import { Link } from "react-router-dom"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { useDispatch, useSelector } from "react-redux"
+import coursesAction from "../../store/courses/actions"
+import { useNavigate } from 'react-router-dom';
 
 export const CourseCard = (props) => {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const role = useSelector((state) => state.user.role);
+    const [userRole, setuserRole] = useState("");
+
+    useEffect(() => {
+        setuserRole(role);
+      }, [role]);
+
     const updateHandler = () => {
-        console.log('TO UPDATE PAGE')
-        // dispatch(coursesAction.updateCourse())
+        dispatch(coursesAction.updateCurrentCourse());
+        navigate(`/courses/${props.id}`)
     }
 
     const deleteHandler = (event) => {
@@ -48,12 +57,16 @@ export const CourseCard = (props) => {
                             <Button title='Show Course' />
                         </Link>
                     </div>
-                    <div className='EditAndDeleteButtonContainer'>
-                        <FontAwesomeIcon icon={faPen} onClick={updateHandler}/>   
-                    </div>
-                    <div className='EditAndDeleteButtonContainer'>
-                        <FontAwesomeIcon icon={faTrash} onClick={deleteHandler}/>
-                    </div>
+                    {userRole === 'admin' && (
+                        <>
+                            <div className='EditAndDeleteButtonContainer'>
+                                <FontAwesomeIcon icon={faPen} onClick={updateHandler}/>   
+                            </div>
+                            <div className='EditAndDeleteButtonContainer'>
+                                <FontAwesomeIcon icon={faTrash} onClick={deleteHandler}/>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

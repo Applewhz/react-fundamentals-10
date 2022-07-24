@@ -3,13 +3,14 @@ import actionType from "./types";
 const initialState = {
     users: [],
     userDetails: [],
+    role: "",
     token: "",
     isAuth: false,
     infoRetrieved: false,
     loading: false,
     error: null,
     isCreated: false,
-};
+  };
 
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -77,6 +78,7 @@ const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userDetails: action.payload.data,
+                role: action.payload.data.role,
                 infoRetrieved: true,
                 loading: false,
             };
