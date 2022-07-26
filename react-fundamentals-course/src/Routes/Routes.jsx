@@ -1,5 +1,6 @@
 import React from 'react'
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import Login from '../components/Login/Login'
 import Registration from '../components/Registration/Registration'
 import CourseInfo from '../components/CourseInfo/CourseInfo'
@@ -8,6 +9,8 @@ import { CreateCourse } from '../components/CreateCourse/CreateCourse'
 import { Header } from '../components/Header/Header'
 import PropTypes from 'prop-types'
 import { Navigate, useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux"
+import UpdateCourseInfo from '../components/UpdateCourseInfo/UpdateCourseInfo'
 
 export const ProtectedRoute = ({ children }) => {
   let location = useLocation()
@@ -26,6 +29,16 @@ export const ProtectedAdminRoute = ({ children }, role) => {
 }
 
 const AppRoutes = ({role}) => {
+  const courseUpdateStatus = useSelector((state) => state.courses.isUpdated)
+
+  const [updateStatus, setUpdateStatus] = useState(courseUpdateStatus)
+
+  useEffect(() => {
+    setUpdateStatus(courseUpdateStatus)
+  }, [courseUpdateStatus])
+
+  console.log('OVER HERE >>>>> ' , updateStatus)
+
   return (
     <Router forceRefresh={true}>
       <Header />
@@ -47,7 +60,7 @@ const AppRoutes = ({role}) => {
         }/>
         <Route path='/courses/:id' element={
           <ProtectedRoute>
-            <CourseInfo />
+            {updateStatus ? <CourseInfo /> : <UpdateCourseInfo />}
           </ProtectedRoute>
         }/>
         <Route path='/courseInfo' element={

@@ -44,6 +44,7 @@ const CourseInfo = () => {
 
     useEffect(() => {
         getCourseData()
+        dispatch(coursesAction.getCourseDetail(id))
     },[])
 
     useEffect(() => {
@@ -92,7 +93,7 @@ const CourseInfo = () => {
         return authorName; 
     }
 
-    if (updateStatus) {
+    // if (updateStatus) {
     return (
         <div key={id}>
             <div className='courseInfo'>
@@ -135,9 +136,10 @@ const CourseInfo = () => {
             </div>
         </div>
         
-    )} else {
-        return <UpdateCourseInfo />
-    }
+    )
+// } else {
+//         return <UpdateCourseInfo />
+//     }
 }
 
 export default CourseInfo

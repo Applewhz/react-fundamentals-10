@@ -15,23 +15,35 @@ export const UpdateCourseInfo = () =>{
     const navigate = useNavigate()
     const { id } = useParams()
     const authors = useSelector((state) => state.authors.authorList)
-    const updateStatus = useSelector((state) => state.courses.isUpdated)
+    const courseUpdateStatus = useSelector((state) => state.courses.isUpdated)
     const courseDetail = useSelector((state) => state.courses.courseDetail)
     const courses = useSelector((state) => state.courses.courseList)
 
     const [courseData, setCourseData] = useState('')
-    const [title , setTitle] = useState(courseDetail.title)
-    const [description , setDescription] = useState(courseDetail.description)
-    const [timeDuration , setTimeDuration] = useState(courseDetail.duration)
-    const [selectedAuthorList , setSelectedAuthorList] = useState(courseDetail.authors)
+    const [title , setTitle] = useState(courseData.title)
+    const [description , setDescription] = useState(courseData.description)
+    const [timeDuration , setTimeDuration] = useState(courseData.duration)
+    const [selectedAuthorList , setSelectedAuthorList] = useState([courseData.authors])
     const [authorList, setAuthorList] = useState([])
     const [courseAuthorList , setCourseAuthorList] = useState([])
     const [newAuthorName , setNewAuthorName] = useState('')
-    const [courseUpdated, setcourseUpdated ] = useState(false)
+    const [courseUpdated, setcourseUpdated ] = useState(courseUpdateStatus)
+
+    console.log('COURSE DETAIL IN UPDATE >>>>> ', courseData.authors)
+    // useEffect(() => {
+    //     dispatch(coursesAction.getCourseDetail(id))
+    //     console.log('dispatching')
+    //     // getCourseData()
+    // }, [])
 
     useEffect(() => {
         dispatch(coursesAction.getCourseDetail(id))
-    }, [])
+        setcourseUpdated(courseUpdateStatus)
+    }, [courseUpdateStatus, id, dispatch])
+
+    // useEffect(() => {
+    //     dispatch(coursesAction.getCourseDetail(id))
+    // }, [courseUpdateStatus, id, dispatch])
 
     useEffect(() => {
         setAuthorList(authors)
@@ -41,9 +53,9 @@ export const UpdateCourseInfo = () =>{
       setCourseAuthorList(getAuthorID(authorList))
     },[authorList])
 
-    useEffect(() => {
-        setcourseUpdated(updateStatus)
-    },[updateStatus])
+    // useEffect(() => {
+    //     setSelectedAuthorList(courseData.authors)
+    // },[courseData])
 
     useEffect(() => {
         setCourseData(courseDetail);
@@ -57,6 +69,18 @@ export const UpdateCourseInfo = () =>{
         let updatedAuthorIDList = authorIDList.filter(data => !selectedAuthorList.includes(data))
         return updatedAuthorIDList;
     }
+
+    // const getCourseData = () => {
+    //     let currentCourse = {}
+    //     courseListData.forEach(course => {
+    //         if(course.id === id) {
+    //             return currentCourse = course 
+    //         } else {
+    //             return
+    //         }
+    //     })
+    //     setCourseData(currentCourse)
+    // }
 
     const titleChangeHandler = (event) => {
         setTitle(event.target.value)
@@ -141,7 +165,7 @@ export const UpdateCourseInfo = () =>{
             })
         )   
     }
-
+    
     const displaySelectedAuthorsList = (selectedAuthorArray) => {
         if(selectedAuthorArray.length === 0){
             return (
@@ -165,7 +189,6 @@ export const UpdateCourseInfo = () =>{
                 })
             ) 
         }
-          
     }
 
     const submitHandler = (event) => {
@@ -239,4 +262,4 @@ export const UpdateCourseInfo = () =>{
         </div>
     )
 }
-export default UpdateCourseInfo;
+export default UpdateCourseInfo
