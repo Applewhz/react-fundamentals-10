@@ -171,8 +171,12 @@ export const CreateCourse = () =>{
                 duration: Number(newCourse.duration),
                 authors: newCourse.authors
             }))
+            setCourseCreated(true)
+            navigate.goBack()
         }
-        
+        // if(courseCreated){
+        //     navigate(`/courses`)
+        // }
     }
 
     return (

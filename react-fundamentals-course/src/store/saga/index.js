@@ -1,5 +1,5 @@
 import { all } from 'redux-saga/effects'
-import { watchUserRegistrationSaga, watchUserLoginSaga, watchUserDetailsSaga } from '../users/saga'
+import { watchUserRegistrationSaga, watchUserLoginSaga, watchUserDetailsSaga, watchUserLogoutSaga } from '../users/saga'
 import { watchCoursesSaga, watchCourseDetailSaga, watchNewCourseSaga, watchDeleteCourseSaga, watchUpdateCourseSaga } from '../courses/saga'
 import { watchAuthorsSaga, watchNewAuthorSaga, watchDeleteAuthorSaga } from '../authors/saga'
 
@@ -16,5 +16,6 @@ export default function* rootSaga() {
         watchUserDetailsSaga(),
         watchDeleteCourseSaga(),
         watchUpdateCourseSaga(),
+        watchUserLogoutSaga()
     ])
 }

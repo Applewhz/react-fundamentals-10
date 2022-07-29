@@ -30,11 +30,6 @@ const CourseInfo = () => {
     }, [courseDeleteStatus])
     
     useEffect(() => {
-        dispatch(coursesAction.getCourseDetail(id))
-        setUpdateStatus(courseUpdateStatus)
-    }, [courseUpdateStatus, id, dispatch])
-    
-    useEffect(() => {
         setAuthorList(authors);
     }, [authors])
     

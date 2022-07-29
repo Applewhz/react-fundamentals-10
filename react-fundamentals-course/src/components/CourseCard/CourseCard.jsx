@@ -20,11 +20,6 @@ export const CourseCard = (props) => {
         setuserRole(role);
       }, [role]);
 
-    const updateHandler = () => {
-        dispatch(coursesAction.updateCurrentCourse());
-        navigate(`/courses/${props.id}`)
-    }
-
     const deleteHandler = (event) => {
         event.preventDefault()
         dispatch(coursesAction.deleteCourse(props.id))
@@ -59,9 +54,11 @@ export const CourseCard = (props) => {
                     </div>
                     {userRole === 'admin' && (
                         <>
-                            <div className='EditAndDeleteButtonContainer'>
-                                <FontAwesomeIcon icon={faPen} onClick={updateHandler}/>   
+                         <Link to={`/courses/update/${props.id}`}>
+                            <div className='EditAndDeleteButtonContainer'> 
+                                <FontAwesomeIcon icon={faPen} />  
                             </div>
+                            </Link> 
                             <div className='EditAndDeleteButtonContainer'>
                                 <FontAwesomeIcon icon={faTrash} onClick={deleteHandler}/>
                             </div>

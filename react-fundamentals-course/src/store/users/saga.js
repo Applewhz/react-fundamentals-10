@@ -49,8 +49,25 @@ export function* watchUserLoginSaga() {
     yield takeLeading(actionType.USER_LOGIN, userLoginGenerator)
 }
 
-// const test = axiosInstance.get('/users/me');
-//         console.log('getting my profile?', test.data.result)
+function* userLogoutGenerator() {
+    try {
+        yield postUserLogout(localStorage.token)
+        yield put(userAction.logout())
+        localStorage.clear()
+    } catch (error) {
+        yield put(userAction.userLoginFailure(error, 'ERROR'));
+    }
+}
+
+const postUserLogout = async (userAuth) => {
+    return (
+        axiosInstance.delete('/logout', userAuth)
+    )
+}
+
+export function* watchUserLogoutSaga() {
+    yield takeLeading(actionType.LOGOUT, userLogoutGenerator)
+}
 
 function* userDetailsGenerator() {
     try {

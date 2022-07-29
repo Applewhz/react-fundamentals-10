@@ -29,16 +29,6 @@ export const ProtectedAdminRoute = ({ children }, role) => {
 }
 
 const AppRoutes = ({role}) => {
-  const courseUpdateStatus = useSelector((state) => state.courses.isUpdated)
-
-  const [updateStatus, setUpdateStatus] = useState(courseUpdateStatus)
-
-  useEffect(() => {
-    setUpdateStatus(courseUpdateStatus)
-  }, [courseUpdateStatus])
-
-  console.log('OVER HERE >>>>> ' , updateStatus)
-
   return (
     <Router forceRefresh={true}>
       <Header />
@@ -58,9 +48,14 @@ const AppRoutes = ({role}) => {
             </ProtectedAdminRoute>
           </ProtectedRoute>
         }/>
+        <Route path='/courses/update/:id' element={
+          <ProtectedRoute>
+            <UpdateCourseInfo />
+          </ProtectedRoute>
+        }/>
         <Route path='/courses/:id' element={
           <ProtectedRoute>
-            {updateStatus ? <CourseInfo /> : <UpdateCourseInfo />}
+            <CourseInfo />
           </ProtectedRoute>
         }/>
         <Route path='/courseInfo' element={

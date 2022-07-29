@@ -14,48 +14,31 @@ export const UpdateCourseInfo = () =>{
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { id } = useParams()
+    
     const authors = useSelector((state) => state.authors.authorList)
-    const courseUpdateStatus = useSelector((state) => state.courses.isUpdated)
-    const courseDetail = useSelector((state) => state.courses.courseDetail)
     const courses = useSelector((state) => state.courses.courseList)
+    const courseDetail = courses.find((course)=>course.id === id)
 
     const [courseData, setCourseData] = useState('')
-    const [title , setTitle] = useState(courseData.title)
-    const [description , setDescription] = useState(courseData.description)
-    const [timeDuration , setTimeDuration] = useState(courseData.duration)
-    const [selectedAuthorList , setSelectedAuthorList] = useState([courseData.authors])
+    const [title , setTitle] = useState(courseDetail.title)
+    const [description , setDescription] = useState(courseDetail.description)
+    const [timeDuration , setTimeDuration] = useState(courseDetail.duration)
+    const [selectedAuthorList , setSelectedAuthorList] = useState(courseDetail.authors)
     const [authorList, setAuthorList] = useState([])
     const [courseAuthorList , setCourseAuthorList] = useState([])
     const [newAuthorName , setNewAuthorName] = useState('')
-    const [courseUpdated, setcourseUpdated ] = useState(courseUpdateStatus)
 
-    console.log('COURSE DETAIL IN UPDATE >>>>> ', courseData.authors)
-    // useEffect(() => {
-    //     dispatch(coursesAction.getCourseDetail(id))
-    //     console.log('dispatching')
-    //     // getCourseData()
-    // }, [])
-
+    useEffect(() => {
+        setAuthorList(authors);
+    }, [authors])
+    
     useEffect(() => {
         dispatch(coursesAction.getCourseDetail(id))
-        setcourseUpdated(courseUpdateStatus)
-    }, [courseUpdateStatus, id, dispatch])
-
-    // useEffect(() => {
-    //     dispatch(coursesAction.getCourseDetail(id))
-    // }, [courseUpdateStatus, id, dispatch])
+    }, [])
 
     useEffect(() => {
-        setAuthorList(authors)
-    },[authors])
-
-    useEffect(() => {
-      setCourseAuthorList(getAuthorID(authorList))
-    },[authorList])
-
-    // useEffect(() => {
-    //     setSelectedAuthorList(courseData.authors)
-    // },[courseData])
+        setCourseAuthorList(getAuthorID(authorList))
+      },[authorList])
 
     useEffect(() => {
         setCourseData(courseDetail);
@@ -70,18 +53,9 @@ export const UpdateCourseInfo = () =>{
         return updatedAuthorIDList;
     }
 
-    // const getCourseData = () => {
-    //     let currentCourse = {}
-    //     courseListData.forEach(course => {
-    //         if(course.id === id) {
-    //             return currentCourse = course 
-    //         } else {
-    //             return
-    //         }
-    //     })
-    //     setCourseData(currentCourse)
-    // }
-
+    const availableAuthors = authors.filter(
+        (availableAuthor) => !courseAuthorList.includes(availableAuthor)
+    )
     const titleChangeHandler = (event) => {
         setTitle(event.target.value)
     }
@@ -207,7 +181,8 @@ export const UpdateCourseInfo = () =>{
                 description: updatedCourse.description,
                 duration: Number(updatedCourse.duration),
                 authors: updatedCourse.authors,
-            }))  
+            })) 
+            navigate('/courses') 
         }    
     }
 
@@ -221,7 +196,6 @@ export const UpdateCourseInfo = () =>{
                     </div>
                     <div className='CreateCourseButton'>
                         <Button title='Update' type='submit' />
-                        {courseUpdated ? navigate('/courses') : null}
                     </div>
                 </div>
                 <div className='Description'>
