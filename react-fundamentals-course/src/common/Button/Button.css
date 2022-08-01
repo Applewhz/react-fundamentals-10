@@ -1,0 +1,12 @@
+button {
+    /* color: black; */
+    padding: 7px 50px 7px 50px;
+    text-align: center;
+    font-size: 15px;
+    background-color: white;
+    border: 3px solid purple; 
+  }
+  
+  button:active {
+    background-color: grey;
+  }

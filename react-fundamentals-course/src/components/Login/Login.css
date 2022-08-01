@@ -1,0 +1,41 @@
+.Login{
+    border: 5px solid blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  
+    margin-top: 20px;
+}
+.LoginCredentials p{
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.LoginCredentials {
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+
+.ToRegistration{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.ToRegistration p{
+    margin-right: 5px;
+}
+
+.Link {
+    color: rgb(0, 106, 255);
+    text-decoration: none;
+}
+
+.LoginButton{
+    margin-top: 20px;
+}
+
+.LoginForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

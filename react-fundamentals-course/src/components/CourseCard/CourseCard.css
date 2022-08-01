@@ -1,0 +1,58 @@
+.CourseCardContainer {
+    display: flex;
+    flex-direction: row;
+    /* align-items: center; */
+    border: 5px solid rgb(28, 247, 123);
+    margin: 10px;
+  }
+  
+  .LeftSide {
+    padding-left: 10px;
+    padding-bottom: 10px;
+    width: 70%;
+    /* border: 5px solid black; */
+  }
+  
+  .Description {
+    margin-top: 30px;
+    font-size: 19px;
+  }
+  
+  .RightSide {
+    width: 30%;
+    padding-bottom: 10px;
+    /* border: 5px solid black; */
+  }
+  
+  .ButtonContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-items: center;
+  }
+  
+  .EditAndDeleteButtonContainer {
+    border: 3px solid purple;
+    padding: 5px;
+    margin-left: 10px;
+  }
+
+  .RightSegments {
+    /* background-color: purple; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 25px;
+    margin-top: 5px;
+  }
+  
+  .alternateTitle {
+    margin: 5px;
+    margin-right: 10px;
+  }
+  
+  .RightContents {
+    margin-top: 7%;
+    margin-bottom: 30px;
+  }

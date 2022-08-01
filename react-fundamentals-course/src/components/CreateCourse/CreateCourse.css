@@ -1,0 +1,152 @@
+.Create {
+    border: 5px solid blue;
+    display: flex;
+  }
+  
+  form {
+    width: 100%;
+    padding: 20px;
+  }
+  
+  .TopSegmentTitleAndButton {
+    /* background-color: purple; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .CreateCourseButton {
+    padding-right: 10px;
+    margin-left: auto;
+    /* align-self: flex-start; */
+  }
+  
+  .CreateCourseTitle {
+    margin-top: 0;
+    border: 3px solid rgba(200, 172, 117, 0.551);
+    height: 25px;
+    width: 250px;
+  }
+  
+  h4 {
+    margin-bottom: 5px;
+  }
+  
+  .Description {
+    padding-right: 20px;
+  }
+  
+  .CreateCourseDescription {
+    border: 3px solid rgba(255, 255, 0, 0.626);
+    width: 100%;
+    min-height: 200px;
+  }
+  
+  .BottomSegment {
+    border: 3px solid rgba(200, 172, 117, 0.236);
+    margin-right: 10px;
+    margin-top: 10px;
+    display: flex;
+  }
+  
+  .BottomSegmentLeft {
+    width: 45%;
+    margin-left: 10px;
+    margin-right: 5%;
+  }
+  
+  .AddAuthor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15%;
+    margin-top: 5%;
+  }
+  
+  .CreateCourseAddAuthor {
+    border: 3px solid rgba(200, 172, 117, 0.551);
+    height: 27px;
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  .AddAuthor h4 {
+    align-self: flex-start;
+  }
+  .Duration {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0;
+    /* background-color: black; */
+  }
+  
+  .Duration h4 {
+    align-self: flex-start;
+  }
+  
+  .CreateCourseDuration {
+    border: 3px solid rgba(200, 172, 117, 0.551);
+    height: 27px;
+    width: 100%;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  .DurationDisplay {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* background-color: black; */
+    margin-bottom: 0;
+  }
+  
+  .DurationDisplay h3 {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 30px;
+  }
+  
+  .DurationDisplay p {
+    font-size: 24px;
+    color: grey;
+    margin: 0;
+  }
+  
+  .CourseAuthorsSegment{
+    /* background-color: black; */
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    width: 100%;
+    
+  }
+  
+  .CourseAuthorsSegment h2{
+    margin-left: 30%;
+  }
+  
+  
+  
+  .AddAuthorSegment{
+    /* background-color: black; */
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+  }
+  
+  .AuthorButton{
+    margin-left: auto;
+  }
+  
+  .AuthorName{
+    margin-right: 150px;
+    font-size: 20px;
+  }
+  
+  .EmptyCourseAuthorSegment{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
