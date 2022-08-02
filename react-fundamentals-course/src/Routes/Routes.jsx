@@ -17,7 +17,7 @@ export const ProtectedRoute = ({ children }, role) => {
   if (!localStorage.getItem('token')) {
     return <Navigate to='/login' state={{ from: location }} replace />
   } 
-  if (localStorage.getItem('token') !== 'admin' ) {
+  if (localStorage.getItem('role') !== 'admin' ) {
     return <Navigate to='/courses' state={{ from: location }} replace />
   }
   return children
