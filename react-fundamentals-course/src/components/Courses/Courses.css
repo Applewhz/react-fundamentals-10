@@ -1,0 +1,16 @@
+.BodyHeader{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
+.Body{
+    border: 5px solid blue;
+    margin: 10px;
+}
+
+.AddCourseButton{
+    padding-right: 10px;
+    margin-left: auto;
+}
