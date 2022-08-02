@@ -42,9 +42,9 @@ export const Header = () => {
     const onClickHandler = (event) => {
         event.preventDefault()
         if(loginStatus === 'Logout'){
-            console.log(localStorage)
-            localStorage.clear()
             dispatch(userAction.logout());
+            console.log(localStorage)
+            // localStorage.clear()
             // setLoginStatus('Login');
             // setUserNameData('');
             navigate('/login');

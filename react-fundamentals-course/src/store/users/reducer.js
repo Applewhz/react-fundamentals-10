@@ -20,6 +20,7 @@ const usersReducer = (state = initialState, action) => {
                 isAuth: true,
             };
         case actionType.LOGOUT:
+            localStorage.clear()
             return {
                 ...state,
                 isAuth: false,
@@ -75,6 +76,7 @@ const usersReducer = (state = initialState, action) => {
                 loading: true,
             };
         case actionType.GET_USER_DETAILS_SUCCESS:
+            localStorage.setItem("role", action.payload.data.role);
             return {
                 ...state,
                 userDetails: action.payload.data,

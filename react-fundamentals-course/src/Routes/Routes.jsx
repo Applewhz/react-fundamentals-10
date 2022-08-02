@@ -12,19 +12,14 @@ import { Navigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from "react-redux"
 import UpdateCourseInfo from '../components/UpdateCourseInfo/UpdateCourseInfo'
 
-export const ProtectedRoute = ({ children }) => {
+export const ProtectedRoute = ({ children }, role) => {
   let location = useLocation()
   if (!localStorage.getItem('token')) {
     return <Navigate to='/login' state={{ from: location }} replace />
-  }
-  return children
-}
-
-export const ProtectedAdminRoute = ({ children }, role) => {
-  let location = useLocation()
-  if (!role === 'admin') {
-    return <Navigate to='/courses' state={{ from: location }} replace />
   } 
+  if (localStorage.getItem('token') !== 'admin' ) {
+    return <Navigate to='/courses' state={{ from: location }} replace />
+  }
   return children
 }
 
@@ -42,24 +37,22 @@ const AppRoutes = ({role}) => {
         </ProtectedRoute>
         }/>
         <Route path='/courses/add' element={
-          <ProtectedRoute>
-            <ProtectedAdminRoute role={role}>
+          <ProtectedRoute role={role}>
               <CreateCourse />
-            </ProtectedAdminRoute>
           </ProtectedRoute>
         }/>
         <Route path='/courses/update/:id' element={
-          <ProtectedRoute>
-            <UpdateCourseInfo />
+          <ProtectedRoute role={role}>
+              <UpdateCourseInfo />
           </ProtectedRoute>
         }/>
         <Route path='/courses/:id' element={
-          <ProtectedRoute>
+          <ProtectedRoute role={role}>
             <CourseInfo />
           </ProtectedRoute>
         }/>
         <Route path='/courseInfo' element={
-          <ProtectedRoute>
+          <ProtectedRoute role={role}>
             <CourseInfo />
           </ProtectedRoute>
         }/>
