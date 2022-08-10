@@ -5,7 +5,7 @@ import './Logo.css';
 export const Logo = () => {
     
     return( 
-            <div className='logo'>
+            <div className='logo' data-testid='header-logo'>
                 <img src={CourseLogo} alt='courseLogo'/>
             </div>
     )
