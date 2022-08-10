@@ -24,21 +24,14 @@ const getHeader = (mockStore) => {
 describe('Header', () => {
   it('renders Header component', async () => {
     const mockUserStore = ({
-      ...store,
-      user: {
-          userDetails: [{
-        isAuth: true,
-        name: 'tester',
-        email: 'tester@email.com',
-        token: 'Mock token here',
-        role: 'user',
-      }]
-    },
+      ...store
     })
-    const {getByTestId, debug} = render(getHeader(mockUserStore))
-    // const testImage = document.querySelector("img") as HTMLImageElement;
-    // expect(logo.img.src).toEqual(logopath);
+    mockUserStore.getState().user.userDetails = {name: "tester" }
+    localStorage.setItem('token', 'mock token')
+    const {getByTestId, debug, getByText} = render(getHeader(mockUserStore))
     getByTestId('header-logo')
+    getByText('tester')
     debug()
+    localStorage.clear()
   })
 })
