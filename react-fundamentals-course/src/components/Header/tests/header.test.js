@@ -31,7 +31,7 @@ describe('Header', () => {
     const {getByTestId, debug, getByText} = render(getHeader(mockUserStore))
     getByTestId('header-logo')
     getByText('tester')
-    debug()
+    // debug()
     localStorage.clear()
   })
 })
