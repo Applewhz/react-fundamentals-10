@@ -26,7 +26,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "eslint": "eslint --ext .js --ext .jsx src",
-    "eslint:fix": "eslint --fix --ext .js --ext .jsx src"
+    "eslint:fix": "eslint --fix --ext .js --ext .jsx src",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -50,10 +51,15 @@
     "@babel/runtime": "^7.18.9",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "husky": "^8.0.1",
+    "husky": "^4.3.8",
     "prettier": "^2.7.1",
     "redux-mock-store": "^1.5.4",
     "redux-saga-mock": "^1.2.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test"
+    }
   },
   "test:nowatch": "react-scripts test --watchAll=false",
   "prepare": "husky install",
